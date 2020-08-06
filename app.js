@@ -7,12 +7,12 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const xss = require("xss");
 
-// security
-(function () {
-  app.use(cors());
-  app.use(xss());
-  app.use(helmet());
-})();
+// prevention of DOS attack by preventing the actual payload data
+app.use(express.json({ limit: "10kb" }));
+// preventing cors error
+app.use(cors());
+
+app.use(helmet());
 
 app.use(express.static("public"));
 
